@@ -5,12 +5,12 @@
 # pass flags to the build command, `snippet` to add a Zephyr snippet, and
 # `artifact-name` to assign a name to distinguish build outputs from each other:
 #
- board: [ "nice_nano_v2" ]
+# board: [ "nice_nano_v2" ]
 # shield: [ "corne_left", "corne_right" ]
- include:
+include:
 #   - board: bdn9_rev2
-   - board: nice_nano_v2
-     shield: ztrack
+  - board: nice_nano_v2
+    shield: ztrack
 #   - board: nice_nano_v2
 #     shield: corne_left
 #     snippet: studio-rpc-usb-uart
@@ -22,8 +22,8 @@
 #  - board: nice_nano_v2
 #    shield: bat43
 
-on: [push, pull_request, workflow_dispatch]
+#on: [push, pull_request, workflow_dispatch]
 
-jobs:
-  build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+#jobs:
+#  build:
+#    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
