@@ -1,3 +1,7 @@
+&uart0 {
+    status = "disabled";
+};
+
 &pro_micro_i2c {
 	status = "okay";
 
@@ -20,7 +24,7 @@
 / {
 	chosen {
 		zmk,kscan = &kscan0;
-		zephyr,display = &oled;
+		//zephyr,display = &oled;
 	};
 
 	kscan0: kscan_0 {
@@ -64,7 +68,7 @@
     cs-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
-        //status = "okay";
+        status = "okay";
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
