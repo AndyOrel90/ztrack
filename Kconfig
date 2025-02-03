@@ -56,7 +56,7 @@ if PMW3610
         Scroll tick value.
 
   choice PMW3610_POLLING_RATE
-    prompt "Select PMW3610's polling rate"
+    #prompt "Select PMW3610's polling rate"
     default PMW3610_POLLING_RATE_250
 
       config PMW3610_POLLING_RATE_250
