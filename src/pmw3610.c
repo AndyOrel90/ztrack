@@ -838,4 +838,4 @@ static int pmw3610_init(const struct device *dev) {
     DEVICE_DT_INST_DEFINE(n, pmw3610_init, NULL, &data##n, &config##n, POST_KERNEL,                \
                           CONFIG_SENSOR_INIT_PRIORITY, NULL);
 
-//DT_INST_FOREACH_STATUS_OKAY(PMW3610_DEFINE)
+DT_INST_FOREACH_STATUS_OKAY(PMW3610_DEFINE)
