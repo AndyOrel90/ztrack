@@ -1,1 +1,9 @@
 #include "ztrack.dtsi"
+
+&spi0 {
+    status = "okay";
+};
+
+&trackball {
+    status = "okay";
+};
