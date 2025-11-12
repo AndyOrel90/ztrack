@@ -87,13 +87,14 @@
     };
 };
 
+/*
 &spi0 {
     status = "okay";
 };
 
 &trackball {
     status = "okay";
-};
+};*/
 
 / {
   trackball_listener {
