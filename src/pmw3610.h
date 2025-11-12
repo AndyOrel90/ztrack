@@ -7,17 +7,8 @@
 extern "C" {
 #endif
 
-/* Timings (in us) used in SPI communication. Since MCU should not do other tasks during wait,
- * k_busy_wait is used instead of k_sleep */
-// - sub-us time is rounded to us, due to the limitation of k_busy_wait, see :
-// https://github.com/zephyrproject-rtos/zephyr/issues/6498
-#define T_NCS_SCLK 1     /* 120 ns (rounded to 1us) */
-#define T_SCLK_NCS_WR 10 /* 10 us */
-#define T_SRAD 4         /* 4 us */
-#define T_SRAD_MOTBR 4   /* same as T_SRAD */
-#define T_SRX 1          /* 250 ns (rounded to 1 us) */
-#define T_SWX 30         /* SWW: 30 us, SWR: 20 us */
-#define T_BEXIT 1        /* 250 ns (rounded to 1us)*/
+/* Timings (in us) used in SPI communication. */
+#define T_CLOCK_ON_DELAY_US 300
 
 /* Sensor registers (addresses) */
 #define PMW3610_REG_PRODUCT_ID 0x00
@@ -43,11 +34,11 @@ extern "C" {
 #define PMW3610_REG_MOTION_BURST 0x12
 
 #define PMW3610_REG_RUN_DOWNSHIFT 0x1B
-#define PMW3610_REG_REST1_PERIOD 0x1C
+#define PMW3610_REG_REST1_RATE 0x1C
 #define PMW3610_REG_REST1_DOWNSHIFT 0x1D
-#define PMW3610_REG_REST2_PERIOD 0x1E
+#define PMW3610_REG_REST2_RATE 0x1E
 #define PMW3610_REG_REST2_DOWNSHIFT 0x1F
-#define PMW3610_REG_REST3_PERIOD 0x20
+#define PMW3610_REG_REST3_RATE 0x20
 #define PMW3610_REG_OBSERVATION 0x2D
 
 #define PMW3610_REG_PIXEL_GRAB 0x35
@@ -103,37 +94,31 @@ extern "C" {
 #define PMW3610_SVALUE_TO_CPI(svalue) ((uint32_t)(svalue).val1)
 #define PMW3610_SVALUE_TO_TIME(svalue) ((uint32_t)(svalue).val1)
 
-#if defined(CONFIG_PMW3610_POLLING_RATE_250) || defined(CONFIG_PMW3610_POLLING_RATE_125_SW)
-#define PMW3610_POLLING_RATE_VALUE 0x0D
-#elif defined(CONFIG_PMW3610_POLLING_RATE_125)
-#define PMW3610_POLLING_RATE_VALUE 0x00
-#else
-#error "A valid PMW3610 polling rate must be selected"
-#endif
+/** @brief Sensor specific attributes of PMW3610. */
+enum pmw3610_attribute {
 
-#ifdef CONFIG_PMW3610_FORCE_AWAKE
-#define PMW3610_FORCE_MODE_VALUE 0xF0
-#else
-#define PMW3610_FORCE_MODE_VALUE 0x00
-#endif
+	/** Sensor CPI for both X and Y axes. */
+	PMW3610_ATTR_CPI,
 
-#define PMW3610_PERFORMANCE_VALUE (PMW3610_FORCE_MODE_VALUE | PMW3610_POLLING_RATE_VALUE)
+	/** Entering time from Run mode to REST1 mode [ms]. */
+	PMW3610_ATTR_RUN_DOWNSHIFT_TIME,
 
-#ifdef CONFIG_PMW3610_INVERT_SCROLL_X
-#define PMW3610_SCROLL_X_NEGATIVE 1
-#define PMW3610_SCROLL_X_POSITIVE -1
-#else
-#define PMW3610_SCROLL_X_NEGATIVE -1
-#define PMW3610_SCROLL_X_POSITIVE 1
-#endif
+	/** Entering time from REST1 mode to REST2 mode [ms]. */
+	PMW3610_ATTR_REST1_DOWNSHIFT_TIME,
 
-#ifdef CONFIG_PMW3610_INVERT_SCROLL_Y
-#define PMW3610_SCROLL_Y_NEGATIVE 1
-#define PMW3610_SCROLL_Y_POSITIVE -1
-#else
-#define PMW3610_SCROLL_Y_NEGATIVE -1
-#define PMW3610_SCROLL_Y_POSITIVE 1
-#endif
+	/** Entering time from REST2 mode to REST3 mode [ms]. */
+	PMW3610_ATTR_REST2_DOWNSHIFT_TIME,
+
+	/** Sampling frequency time during REST1 mode [ms]. */
+	PMW3610_ATTR_REST1_SAMPLE_TIME,
+
+	/** Sampling frequency time during REST2 mode [ms]. */
+	PMW3610_ATTR_REST2_SAMPLE_TIME,
+
+	/** Sampling frequency time during REST3 mode [ms]. */
+	PMW3610_ATTR_REST3_SAMPLE_TIME,
+
+};
 
 #ifdef __cplusplus
 }

@@ -15,50 +15,34 @@
 extern "C" {
 #endif
 
-enum pixart_input_mode { MOVE = 0, SCROLL, SNIPE };
-
 /* device data structure */
 struct pixart_data {
-    const struct device *dev;
+    const struct device          *dev;
+    bool                         sw_smart_flag; // for pmw3610 smart algorithm
 
-    enum pixart_input_mode curr_mode;
-    uint32_t curr_cpi;
-    int32_t scroll_delta_x;
-    int32_t scroll_delta_y;
+    struct gpio_callback         irq_gpio_cb; // motion pin irq callback
+    struct k_work                trigger_work; // realtrigger job
 
-#ifdef CONFIG_PMW3610_POLLING_RATE_125_SW
-    int64_t last_poll_time;
-    int16_t last_x;
-    int16_t last_y;
-#endif
+    struct k_work_delayable      init_work; // the work structure for delayable init steps
+    int                          async_init_step;
 
-    // motion interrupt isr
-    struct gpio_callback irq_gpio_cb;
-    // the work structure holding the trigger job
-    struct k_work trigger_work;
-
-    // the work structure for delayable init steps
-    struct k_work_delayable init_work;
-    int async_init_step;
-
-    //
-    bool ready;           // whether init is finished successfully
-    bool last_read_burst; // todo: needed?
-    int err;              // error code during async init
-
-    // for pmw3610 smart algorithm
-    bool sw_smart_flag;
+    bool                         ready; // whether init is finished successfully
+    int                          err; // error code during async init
 };
 
 // device config data structure
 struct pixart_config {
+	struct spi_dt_spec spi;
     struct gpio_dt_spec irq_gpio;
-    struct spi_dt_spec bus;
-    struct gpio_dt_spec cs_gpio;
-    size_t scroll_layers_len;
-    int32_t *scroll_layers;
-    size_t snipe_layers_len;
-    int32_t *snipe_layers;
+    uint16_t cpi;
+    bool swap_xy;
+    bool inv_x;
+    bool inv_y;
+    uint8_t evt_type;
+    uint8_t x_input_code;
+    uint8_t y_input_code;
+    bool force_awake;
+    bool force_awake_4ms_mode;
 };
 
 #ifdef __cplusplus
