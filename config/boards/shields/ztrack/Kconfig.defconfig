@@ -2,37 +2,39 @@
 config ZMK_KEYBOARD_NAME
     default "ztrack"
     
-config I2C
-    bool
-    default y
+if ZMK_DISPLAY
+    config I2C
+        bool
+        default y
 
-config SSD1306
-    bool
-    default y
+    config SSD1306
+        bool
+        default y
 
-config SSD1306_REVERSE_MODE
-    bool
-    default y
+    config SSD1306_REVERSE_MODE
+        bool
+        default y
 
-config LVGL_HOR_RES_MAX
-    int
-    default 128
+    config LVGL_HOR_RES_MAX
+        int
+        default 128
 
-config LVGL_VER_RES_MAX
-    int
-    default 32
+    config LVGL_VER_RES_MAX
+        int
+        default 32
 
-config LVGL_VDB_SIZE
-    int
-    default 64
+    config LVGL_VDB_SIZE
+        int
+        default 64
 
-config LVGL_DPI
-    int
-    default 148
+    config LVGL_DPI
+        int
+        default 148
 
-config LVGL_BITS_PER_PIXEL
-    int
-    default 1
+    config LVGL_BITS_PER_PIXEL
+        int
+        default 1
+endif # ZMK_DISPLAY
 
 if LVGL
     config LV_Z_VDB_SIZE
@@ -44,7 +46,7 @@ if LVGL
     config LV_Z_BITS_PER_PIXEL
         default 1
 
-   choice LV_COLOR_DEPTH
+    choice LV_COLOR_DEPTH
         default LV_COLOR_DEPTH_1
     endchoice
 endif # LVGL
