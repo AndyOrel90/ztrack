@@ -2,27 +2,7 @@
     status = "disabled";
 };
 */
-
-&i2c1 {
-    status = "okay";
-    scl-pin = <20>;
-    sda-pin = <17>;
-    clock-frequency = <I2C_BITRATE_STANDARD>;
-};
 /*
-&oled {
-    compatible = "solomon,ssd1306fb";
-    label = "OLED";
-    i2c = <&i2c1>;
-    width = <128>;
-    height = <64>;
-    segment-offset = <0>;
-    page-offset = <0>;
-    rotation = <0>;
-    display-on = <1>;
-};*/
-
-
 &pro_micro_i2c {
 	status = "okay";
 
@@ -31,7 +11,6 @@
 		reg = <0x3c>;
 		width = <128>;
 		height = <32>;
-        i2c = <&i2c1>;
 		segment-offset = <0>;
 		page-offset = <0>;
 		display-offset = <0>;
@@ -41,7 +20,26 @@
 		com-sequential;
 		prechargep = <0x22>;
 	};
-};
+};*/
+
+&i2c1 {
+        status = "okay";
+
+    	ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		width = <128>;
+		height = <32>;
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <31>;
+		segment-remap;
+		com-invdir;
+		com-sequential;
+		prechargep = <0x22>;
+	};
+}
 
 / {
 	chosen {
