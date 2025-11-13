@@ -44,8 +44,7 @@
 
 &pro_micro_spi {
 	status = "okay";
-    data-cmd-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
-    reset-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
+
 
 	oled: ssd1306@3c {
 		compatible = "solomon,ssd1306fb";
@@ -60,6 +59,8 @@
 		com-invdir;
 		com-sequential;
 		prechargep = <0x22>;
+        data_cmd-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
 
         //pinctrl-0 = <&spi1_default>;
         //pinctrl-1 = <&spi1_sleep>;
