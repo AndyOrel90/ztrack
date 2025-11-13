@@ -35,7 +35,6 @@
         pinctrl-0 = <&i2c1_default>;
         pinctrl-names = "default";
 
-
     	oled: ssd1306@3c {
 		compatible = "solomon,ssd1306fb";
 		reg = <0x3c>;
@@ -49,6 +48,7 @@
 		com-invdir;
 		com-sequential;
 		prechargep = <0x22>;
+        display-on = <1>;
 	};
 };
 
