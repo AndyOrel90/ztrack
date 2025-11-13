@@ -41,7 +41,6 @@
     };
 };
 
-
 &pro_micro_spi {
 	status = "okay";
 
@@ -60,8 +59,8 @@
 		prechargep = <0x22>;
         //data_cmd-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
         //reset-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
-        data_cmd-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
-        reset-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
+        data_cmd-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpio0 20 GPIO_ACTIVE_HIGH>;
         spi-max-frequency = <2000000>;
 
         //pinctrl-0 = <&spi1_default>;
